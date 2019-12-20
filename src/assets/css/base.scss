@@ -1,0 +1,45 @@
+/* 设置一些公共样式属性 */
+
+/* 变量 */
+
+
+/* 混合 */
+
+// 四边形设置高宽
+@mixin quadrilateral($num...) {
+
+  @if length($num)==0 {
+    height: 0;
+    width: 0;
+  }
+
+  @else if length($num)==1 {
+    height: $num;
+    width: $num;
+  }
+
+  @else if length($num)==2 {
+    height: nth($num, 1);
+    width: nth($num, 2);
+  }
+
+  @else {
+    @debug "Too many parameters";
+  }
+}
+
+/* 继承 */
+
+// flex绝对居中
+%flex-all-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 超出一行省略号
+%ellipsis-line-1 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
