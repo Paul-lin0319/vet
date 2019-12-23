@@ -11,7 +11,6 @@
         <el-tabs
           v-model="editableTabsValue"
           type="card"
-          closable
           @tab-remove="removeTab"
         >
           <el-tab-pane
@@ -19,7 +18,7 @@
             :key="index"
             :label="item.title"
             :name="item.name"
-            :closable="false"
+            :closable="item.closable"
           >
           </el-tab-pane>
         </el-tabs>
@@ -39,6 +38,7 @@ import SideMenu from './SideMenu/index.vue';
 interface IeditableTabsObj {
   name: string;
   title: string;
+  closable: boolean;
 }
 
 @Component({
@@ -53,7 +53,13 @@ export default class LayOut extends Vue {
   private editableTabs: IeditableTabsObj[] = [
     {
       name: '111',
-      title: 'tt'
+      title: 'tt',
+      closable: false
+    },
+    {
+      name: '222',
+      title: 'yy',
+      closable: true
     }
   ];
 }
