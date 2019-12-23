@@ -8,7 +8,24 @@
       <SideMenu :layerAsideWidth="layerAsideWidth"></SideMenu>
       <!-- 页面主体 -->
       <el-main>
-        <router-view></router-view>
+        <el-tabs
+          v-model="editableTabsValue"
+          type="card"
+          closable
+          @tab-remove="removeTab"
+        >
+          <el-tab-pane
+            v-for="(item, index) in editableTabs"
+            :key="index"
+            :label="item.title"
+            :name="item.name"
+            :closable="false"
+          >
+          </el-tab-pane>
+        </el-tabs>
+        <keep-alive :include="[]">
+          <router-view></router-view>
+        </keep-alive>
       </el-main>
     </el-container>
   </div>
@@ -19,6 +36,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import TopNav from './TopNav/index.vue';
 import SideMenu from './SideMenu/index.vue';
 
+interface IeditableTabsObj {
+  name: string;
+  title: string;
+}
+
 @Component({
   components: {
     TopNav,
@@ -26,8 +48,14 @@ import SideMenu from './SideMenu/index.vue';
   }
 })
 export default class LayOut extends Vue {
-  private layerTopHeight = '60px';
-  private layerAsideWidth = '200px';
+  private layerTopHeight: string = '60px';
+  private layerAsideWidth: string = '200px';
+  private editableTabs: IeditableTabsObj[] = [
+    {
+      name: '111',
+      title: 'tt'
+    }
+  ];
 }
 </script>
 

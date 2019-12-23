@@ -76,6 +76,7 @@ export default class login extends Vue {
   background: #eee;
   @extend %flex-all-center;
   .form-wrap {
+    position: relative;
   }
 }
 </style>
