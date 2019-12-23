@@ -50,6 +50,7 @@ interface IeditableTabsObj {
 export default class LayOut extends Vue {
   private layerTopHeight: string = '60px';
   private layerAsideWidth: string = '200px';
+  private editableTabsValue: string = '111';
   private editableTabs: IeditableTabsObj[] = [
     {
       name: '111',
@@ -62,6 +63,12 @@ export default class LayOut extends Vue {
       closable: true
     }
   ];
+  private removeTab(name: string): void {
+    const tabIndex: number = this.editableTabs.findIndex(
+      item => item.name === name
+    );
+    this.editableTabs.splice(tabIndex, 1);
+  }
 }
 </script>
 
