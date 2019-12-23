@@ -13,28 +13,16 @@
           :rules="loginFormRules"
           @submit.stop.prevent="() => {}"
         >
-          <el-form-item
-            label="用户名:"
-            prop="account"
-          >
-            <el-input
-              type="text"
-              v-model="loginFormModel.account"
-            ></el-input>
+          <el-form-item label="用户名:" prop="account">
+            <el-input type="text" v-model="loginFormModel.account"></el-input>
           </el-form-item>
-          <el-form-item
-            label="密码:"
-            prop="password"
-          >
+          <el-form-item label="密码:" prop="password">
             <el-input
               type="password"
               v-model="loginFormModel.password"
             ></el-input>
           </el-form-item>
-          <el-form-item
-            label="验证码:"
-            prop="verification"
-          >
+          <el-form-item label="验证码:" prop="verification">
             <el-input
               type="text"
               v-model="loginFormModel.verification"
@@ -47,7 +35,7 @@
           </el-form-item>
         </el-form>
         <div class="login-form-bottom">
-          <el-button>登录</el-button>
+          <el-button @click="doLogin">登录</el-button>
         </div>
       </el-card>
     </div>
@@ -55,25 +43,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import test from "./test.vue";
-import { AliyunCaptcha } from "vue-aliyun-captcha";
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { AliyunCaptcha } from 'vue-aliyun-captcha';
 
 @Component({
-  name: "login",
+  name: 'login',
   components: {
     AliyunCaptcha
   }
 })
 export default class login extends Vue {
-  private labelPosition = "right";
+  private labelPosition = 'right';
   private loginFormModel = {
-    account: "",
-    password: "",
-    verification: ""
+    account: '',
+    password: '',
+    verification: ''
   };
   private loginFormRules = {};
   onCaptcha() {}
+  doLogin() {
+    localStorage.setItem('userId', '1');
+    this.$router.push('/home');
+  }
 }
 </script>
 
