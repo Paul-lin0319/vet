@@ -1,9 +1,12 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Login from '@/views/Login/index.vue'
-import Layout from '@/views/Layout/index.vue'
-import Home from '@/views/Home/index.vue'
-import Page404 from '@/views/404/index.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import store from '@/store/index';
+
+import Login from '@/views/Login/index.vue';
+import Layout from '@/views/Layout/index.vue';
+import Home from '@/views/Home/index.vue';
+import Page404 from '@/views/404/index.vue';
+import system from './system';
 
 Vue.use(VueRouter)
 
@@ -18,15 +21,22 @@ const routes = [
     name: 'layout',
     component: Layout,
     redirect: '/home',
-    children: [{
-      path: 'home',
-      name: 'home',
-      component: Home
-    }, {
-      path: '404',
-      name: '404',
-      component: Page404
-    }]
+    children: [
+      {
+        path: 'home',
+        name: 'home',
+        meta: { title: '首页' },
+        component: Home
+      }, {
+        path: '/system',
+        name: 'system',
+        children: [...system]
+      }, {
+        path: '404',
+        name: '404',
+        component: Page404
+      }
+    ]
   },
   {
     path: '/about',
@@ -44,12 +54,12 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
 
 router.beforeEach((to, from, next) => {
+  console.log(to, from, next);
   const userId = localStorage.getItem('userId');
   if (to.path === '/login') {
     if (userId) {
@@ -64,6 +74,11 @@ router.beforeEach((to, from, next) => {
     next('/login');
     return;
   }
+  store.dispatch('addIncludeList', {
+    name: to.path,
+    title: to.meta.title,
+    closable: to.path !== '/home'
+  });
   next();
 })
 

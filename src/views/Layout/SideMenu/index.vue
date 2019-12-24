@@ -2,32 +2,84 @@
   <div class="side-menu">
     <el-aside :width="layerAsideWidth">
       <el-menu
-        :default-openeds="[]"
+        :default-active="defaultActive"
         :background-color="layoutBgColor"
+        :router="true"
+        :unique-opened="true"
+        @select="aa"
         text-color="#fff"
+        ref="sideMenu"
       >
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-setting"></i>系统设置
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="1-1">
-              <i class="el-icon-user"></i>用户管理
-            </el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+        <SubMenu
+          v-for="(item, index) in sideMenuData"
+          :key="index"
+          :subMenuData="item"
+        ></SubMenu>
       </el-menu>
     </el-aside>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
+import { Getter, Action } from 'vuex-class';
+import SubMenu from './submenu.vue';
 
-@Component
+interface IsideMenuItem {
+  title: string;
+  path?: string;
+  icon?: string;
+  children?: IsideMenuItem[];
+}
+
+@Component({
+  components: {
+    SubMenu
+  }
+})
 export default class SideMenu extends Vue {
   @Prop() private layerAsideWidth!: string;
-  private layoutBgColor = '#3a424d';
+  private layoutBgColor: string = '#3a424d';
+  private defaultActive: string = '';
+  private sideMenuData: IsideMenuItem[] = [
+    {
+      title: '系统管理',
+      icon: 'el-icon-setting',
+      path: '/system',
+      children: [
+        {
+          title: '用户管理',
+          path: '/system/userManager',
+          icon: 'el-icon-user'
+        },
+        { title: '测试', path: '/system/test', icon: 'el-icon-user' }
+      ]
+    }
+  ];
+
+  @Getter
+  private activeLayoutTab!: string;
+
+  // watch
+  @Watch('activeLayoutTab')
+  private onChildChanged(val: string, oldVal: string): void {
+    this.defaultActive = val;
+    if (val !== '/home') {
+      let strList = val.split('/');
+      strList.pop();
+      this.$refs['sideMenu'].open(strList.join('/'));
+    }
+  }
+
+  // methods
+  private aa() {
+    console.log(arguments);
+  }
+
+  // mounted
+  private mounted() {
+    this.defaultActive = this.activeLayoutTab;
+  }
 }
 </script>
 

@@ -4,10 +4,10 @@ import mutations from './mutations';
 import actions from './actions';
 
 const layerMainNav = {
-  ...state,
-  ...getters,
-  ...actions,
-  ...mutations
+  state,
+  getters,
+  actions,
+  mutations
 }
 
 export default layerMainNav;
