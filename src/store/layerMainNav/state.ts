@@ -5,7 +5,7 @@ export interface IincludeItem {
 }
 export interface IincludeList {
   includeList: IincludeItem[];
-  activeLayoutTab: string
+  activeLayoutTab: string;
 }
 
 export default {

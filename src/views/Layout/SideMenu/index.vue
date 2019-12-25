@@ -6,7 +6,6 @@
         :background-color="layoutBgColor"
         :router="true"
         :unique-opened="true"
-        @select="aa"
         text-color="#fff"
         ref="sideMenu"
       >
@@ -31,6 +30,9 @@ interface IsideMenuItem {
   icon?: string;
   children?: IsideMenuItem[];
 }
+interface IVueOpen extends Vue {
+  open: (param: string) => {};
+}
 
 @Component({
   components: {
@@ -52,6 +54,11 @@ export default class SideMenu extends Vue {
           path: '/system/userManager',
           icon: 'el-icon-user'
         },
+        {
+          title: '应用管理',
+          path: '/system/applicationManagement',
+          icon: 'el-icon-menu'
+        },
         { title: '测试', path: '/system/test', icon: 'el-icon-user' }
       ]
     }
@@ -62,19 +69,16 @@ export default class SideMenu extends Vue {
 
   // watch
   @Watch('activeLayoutTab')
-  private onChildChanged(val: string, oldVal: string): void {
+  private onActiveLayoutTabChanged(val: string, oldVal: string): void {
     this.defaultActive = val;
-    if (val !== '/home') {
+    if (val !== '/home' && val !== '/404') {
       let strList = val.split('/');
       strList.pop();
-      this.$refs['sideMenu'].open(strList.join('/'));
+      (this.$refs['sideMenu'] as IVueOpen).open(strList.join('/'));
     }
   }
 
   // methods
-  private aa() {
-    console.log(arguments);
-  }
 
   // mounted
   private mounted() {

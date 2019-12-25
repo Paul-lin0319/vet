@@ -14,20 +14,16 @@ const addIncludeList: Mutation<State> = (state: State, item: IincludeItem): void
 };
 
 const delIncludeList: Mutation<State> = (state: State, name: string): void => {
-  let index = state.includeList.findIndex(item => {
-    return name === item.name;
+  state.includeList = state.includeList.filter(item => {
+    return name !== item.name;
   });
-  if (index > -1) {
-    state.includeList.splice(index, 1);
-    localStorage.setItem('KEY_layerMainNav', JSON.stringify(state.includeList));
-  }
+  localStorage.setItem('KEY_layerMainNav', JSON.stringify(state.includeList));
 };
 
 const initIncludeList: Mutation<State> = (state: State): void => {
   // 获取本地存储
   let userIncludes: IincludeItem[] = JSON.parse(localStorage.getItem('KEY_layerMainNav') || '[]');
   state.includeList = userIncludes;
-  console.log(userIncludes);
   if (-1 === state.includeList.findIndex(elem => {
     return elem.name === '/home'
   })) {

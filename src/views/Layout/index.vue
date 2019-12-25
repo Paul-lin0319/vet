@@ -9,7 +9,7 @@
       <!-- 页面主体 -->
       <el-main>
         <el-tabs
-          v-model="activeTab"
+          v-model="activeTabStr"
           type="card"
           @tab-remove="removeTab"
           @tab-click="activeTabChange"
@@ -18,7 +18,7 @@
             v-for="(item, index) in includeList"
             :key="index"
             :label="item.title"
-            :name="item.name"
+            :name="`${index}&&${item.name}`"
             :closable="item.closable"
           >
           </el-tab-pane>
@@ -73,29 +73,45 @@ export default class LayOut extends Vue {
   @Action
   private delIncludeList!: (name: string) => void;
 
-  // watch
-  @Watch('activeLayoutTab')
-  private onChildChanged(val: string, oldVal: string): void {
-    this.activeTab = val;
+  // 计算属性
+  get activeTabStr(): string {
+    return (
+      this.includeList.findIndex(item => this.activeLayoutTab === item.name) +
+      '&&' +
+      this.activeLayoutTab
+    );
+  }
+  // 设置计算属性
+  set activeTabStr(param: string) {
+    this.activeTab = param;
   }
 
   // method
+  private activateTabChange(val: string) {
+    this.activeTab =
+      this.includeList.findIndex(item => val === item.name) + '&&' + val;
+  }
   private removeTab(name: string): void {
-    this.delIncludeList(name);
-    if (name === this.$route.path) {
+    const tabName: string = name.split('&&')[1];
+    this.delIncludeList(tabName);
+    if (tabName === this.$route.path) {
       this.$router.push(this.includeList.slice(-1)[0].name);
     }
   }
   private activeTabChange(tab: paramVue) {
-    if (tab.name !== this.$route.path) {
-      this.$router.push(tab.name);
+    const tabName: string = tab.name.split('&&')[1];
+    if (tabName !== this.$route.path) {
+      this.$router.push(tabName);
     }
   }
 
   // mounted()
   private mounted() {
     this.initIncludeList();
-    this.activeTab = this.activeLayoutTab;
+    this.activeTab =
+      this.includeList.findIndex(item => this.activeLayoutTab === item.name) +
+      '&&' +
+      this.activeLayoutTab;
   }
 }
 </script>

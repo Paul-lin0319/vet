@@ -1,14 +1,21 @@
-import UserManager from '@/views/System/userManager/index.vue';
+import UserManager from '@/views/System/UserManager/index.vue';
+import ApplicationManagement from '@/views/System/ApplicationManagement/index.vue';
 import Test from '@/views/System/userManager/test.vue';
 export default [
   {
-    path: 'userManager',
+    path: 'system/userManager',
     name: 'userManager',
     meta: { title: '用户管理' },
     component: UserManager
   },
   {
-    path: 'test',
+    path: 'system/applicationManagement',
+    name: 'applicationManagement',
+    meta: { title: '应用管理' },
+    component: ApplicationManagement
+  },
+  {
+    path: 'system/test',
     name: 'test',
     meta: { title: '测试' },
     component: Test

@@ -27,43 +27,62 @@
               type="text"
               v-model="loginFormModel.verification"
             ></el-input>
-            <aliyun-capcha
-              appkey="aliyun 滑动验证提供的key"
-              scene="场景"
-              v-on:callback="onCaptcha"
-            ></aliyun-capcha>
           </el-form-item>
         </el-form>
         <div class="login-form-bottom">
-          <el-button @click="doLogin">登录</el-button>
+          <el-button
+            @click="
+              () => {
+                verificationCodeShow = true;
+              }
+            "
+            >登录</el-button
+          >
         </div>
       </el-card>
     </div>
+    <el-dialog title="验证" :visible.sync="verificationCodeShow" width="350px">
+      <SliderVerificationCode
+        @success="doLogin"
+        @fail="onFail"
+        @refresh="onRefresh"
+        :slider-text="verificationCodeText"
+      ></SliderVerificationCode>
+    </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { AliyunCaptcha } from 'vue-aliyun-captcha';
+import SliderVerificationCode from '@/components/SliderVerificationCode/slide-verify.vue';
 
 @Component({
   name: 'login',
   components: {
-    AliyunCaptcha
+    SliderVerificationCode
   }
 })
 export default class login extends Vue {
-  private labelPosition = 'right';
+  private labelPosition: string = 'right';
   private loginFormModel = {
     account: '',
     password: '',
     verification: ''
   };
+  private verificationCodeShow: boolean = false;
+  private verificationCodeText: string = '请滑动滑块校验';
+  private verificationCodeImgs: [] = [];
   private loginFormRules = {};
-  onCaptcha() {}
-  doLogin() {
+  private onCaptcha() {}
+  private doLogin() {
     localStorage.setItem('userId', '1');
     this.$router.push('/home');
+  }
+  private onFail() {
+    this.verificationCodeText = '请重新滑动滑块校验';
+  }
+  private onRefresh() {
+    this.verificationCodeText = '请滑动滑块校验';
   }
 }
 </script>
