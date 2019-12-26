@@ -23,7 +23,7 @@
           >
           </el-tab-pane>
         </el-tabs>
-        <keep-alive :include="[]">
+        <keep-alive :include="keepAliveList">
           <router-view></router-view>
         </keep-alive>
       </el-main>
@@ -66,6 +66,8 @@ export default class LayOut extends Vue {
   private activeLayoutTab!: string;
   @Getter
   private includeList!: IincludeItem[];
+  @Getter
+  private keepAliveList!: string[];
   @Action
   private initIncludeList!: () => void;
   @Action

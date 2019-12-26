@@ -75,6 +75,7 @@ router.beforeEach((to, from, next) => {
   }
   store.dispatch('addIncludeList', {
     name: to.path,
+    routerName: to.name,
     title: to.meta.title,
     closable: to.path !== '/home'
   });

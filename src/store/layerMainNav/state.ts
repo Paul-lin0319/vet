@@ -1,5 +1,6 @@
 export interface IincludeItem {
   name: string;
+  routerName: string;
   title: string;
   closable: boolean;
 }

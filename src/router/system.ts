@@ -1,6 +1,6 @@
 import UserManager from '@/views/System/UserManager/index.vue';
 import ApplicationManagement from '@/views/System/ApplicationManagement/index.vue';
-import Test from '@/views/System/userManager/test.vue';
+import Test from '@/views/System/UserManager/test.vue';
 export default [
   {
     path: 'system/userManager',

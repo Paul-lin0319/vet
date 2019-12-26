@@ -29,6 +29,7 @@ const initIncludeList: Mutation<State> = (state: State): void => {
   })) {
     state.includeList = [{
       name: '/home',
+      routerName: 'home',
       title: '首页',
       closable: false
     }, ...state.includeList];
