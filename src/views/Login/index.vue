@@ -13,16 +13,28 @@
           :rules="loginFormRules"
           @submit.stop.prevent="() => {}"
         >
-          <el-form-item label="用户名:" prop="account">
-            <el-input type="text" v-model="loginFormModel.account"></el-input>
+          <el-form-item
+            label="用户名:"
+            prop="account"
+          >
+            <el-input
+              type="text"
+              v-model="loginFormModel.account"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="密码:" prop="password">
+          <el-form-item
+            label="密码:"
+            prop="password"
+          >
             <el-input
               type="password"
               v-model="loginFormModel.password"
             ></el-input>
           </el-form-item>
-          <el-form-item label="验证码:" prop="verification">
+          <el-form-item
+            label="验证码:"
+            prop="verification"
+          >
             <el-input
               type="text"
               v-model="loginFormModel.verification"
@@ -30,18 +42,20 @@
           </el-form-item>
         </el-form>
         <div class="login-form-bottom">
-          <el-button
-            @click="
+          <el-button @click="
               () => {
                 verificationCodeShow = true;
               }
-            "
-            >登录</el-button
-          >
+            ">
+            登录</el-button>
         </div>
       </el-card>
     </div>
-    <el-dialog title="验证" :visible.sync="verificationCodeShow" width="350px">
+    <el-dialog
+      title="验证"
+      :visible.sync="verificationCodeShow"
+      width="350px"
+    >
       <SliderVerificationCode
         @success="doLogin"
         @fail="onFail"
@@ -53,36 +67,36 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import SliderVerificationCode from '@/components/SliderVerificationCode/slide-verify.vue';
+import { Component, Prop, Vue } from "vue-property-decorator";
+import SliderVerificationCode from "@/components/SliderVerificationCode/slide-verify.vue";
 
 @Component({
-  name: 'login',
+  name: "login",
   components: {
     SliderVerificationCode
   }
 })
 export default class login extends Vue {
-  private labelPosition: string = 'right';
+  private labelPosition: string = "right";
   private loginFormModel = {
-    account: '',
-    password: '',
-    verification: ''
+    account: "",
+    password: "",
+    verification: ""
   };
   private verificationCodeShow: boolean = false;
-  private verificationCodeText: string = '请滑动滑块校验';
+  private verificationCodeText: string = "请滑动滑块校验";
   private verificationCodeImgs: [] = [];
   private loginFormRules = {};
   private onCaptcha() {}
   private doLogin() {
-    localStorage.setItem('userId', '1');
-    this.$router.push('/home');
+    localStorage.setItem("userId", "1");
+    this.$router.push("/home");
   }
   private onFail() {
-    this.verificationCodeText = '请重新滑动滑块校验';
+    this.verificationCodeText = "请重新滑动滑块校验";
   }
   private onRefresh() {
-    this.verificationCodeText = '请滑动滑块校验';
+    this.verificationCodeText = "请滑动滑块校验";
   }
 }
 </script>
