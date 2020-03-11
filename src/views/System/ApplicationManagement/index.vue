@@ -12,6 +12,7 @@
             <el-input
               v-model="searchFormModel.ClientId"
               placeholder="请输入关键字搜索"
+              clearable
             ></el-input>
           </el-form-item>
           <el-form-item>

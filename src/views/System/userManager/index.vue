@@ -11,12 +11,14 @@
           <el-input
             v-model="searchFormModel.user"
             placeholder="请输入关键字搜索"
+            clearable
           ></el-input>
         </el-form-item>
         <el-form-item label="角色">
           <el-select
             v-model="searchFormModel.role"
             placeholder="请选择角色"
+            clearable
           >
             <el-option
               v-for="(item, index) in searchFormRoleOpt"

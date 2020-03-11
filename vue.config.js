@@ -9,6 +9,9 @@ const BASE_URL = process.env.NODE_ENV === 'production' ? './' : '/';
 module.exports = {
   publicPath: BASE_URL, // 公共文件路径
   lintOnSave: true, // 在保存文件的时候对代码进行格式校验
+  devServer: {
+    port: 10001
+  },
   css: {
     loaderOptions: {
       sass: {

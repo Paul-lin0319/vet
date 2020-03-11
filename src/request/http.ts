@@ -6,18 +6,18 @@ import { Message } from 'element-ui'; // elementde提示消息组件
 // 环境的切换
 let baseURL: string = '';
 if (process.env.NODE_ENV == 'development') {
-  // axios.defaults.baseURL = 'https://www.baidu.com';
+  axios.defaults.baseURL = 'http://dev.homebi.cc';
 }
-else if (process.env.NODE_ENV == 'debug') {
-  // axios.defaults.baseURL = 'https://www.ceshi.com';
+else if (process.env.NODE_ENV == 'test') {
+  axios.defaults.baseURL = 'http://test.homebi.cc/';
 }
 else if (process.env.NODE_ENV == 'production') {
-  // axios.defaults.baseURL = 'https://www.production.com';
+  axios.defaults.baseURL = 'http://erp.homebi.com/';
 }
 
 
 const service = axios.create({
-  baseURL,
+  // baseURL,
   headers: {
     get: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
